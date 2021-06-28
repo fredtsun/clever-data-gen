@@ -32,6 +32,8 @@ def generate_school(index, rc: ReferenceCache):
 
 def generate_staff(index, rc: ReferenceCache):
     all_schools = rc.retrieve_all(m.School)
+    # todo make this configurable later
+    skip_id = random.choice(all_schools)
     staff_id = f"staff_id_{index}"
     staff = [
         m.Staff(
@@ -43,7 +45,7 @@ def generate_staff(index, rc: ReferenceCache):
                 "Last_name": f"Ln {index}",
             }
         )
-        for school_id in all_schools
+        for school_id in all_schools if school_id != skip_id 
     ]
     rc.add(m.Staff, staff_id)
     return staff
